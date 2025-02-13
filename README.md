@@ -49,3 +49,36 @@ where synnilinn='Tallinn';
 Select Avg(pikkus) As 'keskmine pikkus', synnilinn
 From laps;
 Group by synnilinn;
+--näita laste arv, mis on sündinud
+--konkreetsel synniaastal
+Select synniaasta, count (*) as LasteArv
+from laps
+group by synniaasta
+--Having - piirang juba grupeeritud andmete järgi
+--Keskmine pikkus iga synniaasta järgi
+Select synniaasta, AVG(pikkus) as keskmine
+from laps
+group by synniaasta
+Having AVG(pikkus)>150;
+
+Select synniaasta, AVG(pikkus) as keskmine
+from laps
+where not synniaasta=2001
+Group by synniaasta
+
+--seotud tabel
+Create Table loom(
+loomID int Primary key identity(1,1),
+loomNimi varchar(50),
+lapsID int,
+FOREIGN KEY (lapsID) REFERENCES laps(lapsID)
+);
+insert into loom(loomNimi, lapsID)
+values('kass Kott', 1),
+('koer Bobik', 1),
+('koer Tuzik', 2),
+('kass Tuzik', 3),
+('kass Mura', 3),
+('kilpkonn ', 3);
+
+Select * From loom;
